@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SkyApm.Diagnostics.MySqlData</name>
+    </assembly>
+    <members>
+        <member name="M:SkyApm.Diagnostics.MySqlData.MySqlDataDiagnosticProcessor.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="eventCache"></param>
+            <param name="source"></param>
+            <param name="eventType"></param>
+            <param name="id"></param>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+    </members>
+</doc>

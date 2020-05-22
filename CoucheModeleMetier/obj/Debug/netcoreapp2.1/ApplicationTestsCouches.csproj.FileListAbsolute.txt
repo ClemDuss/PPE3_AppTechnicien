@@ -1,0 +1,11 @@
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\bin\Debug\netcoreapp2.1\ApplicationTestsCouches.deps.json
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\bin\Debug\netcoreapp2.1\ApplicationTestsCouches.runtimeconfig.json
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\bin\Debug\netcoreapp2.1\ApplicationTestsCouches.runtimeconfig.dev.json
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\bin\Debug\netcoreapp2.1\ApplicationTestsCouches.dll
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\obj\Debug\netcoreapp2.1\ApplicationTestsCouches.csproj.CoreCompileInputs.cache
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\obj\Debug\netcoreapp2.1\ApplicationTestsCouches.AssemblyInfoInputs.cache
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\obj\Debug\netcoreapp2.1\ApplicationTestsCouches.AssemblyInfo.cs
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\bin\Debug\netcoreapp2.1\ApplicationTestsCouches.pdb
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\obj\Debug\netcoreapp2.1\ApplicationTestsCouches.csprojAssemblyReference.cache
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\obj\Debug\netcoreapp2.1\ApplicationTestsCouches.dll
+D:\ClementDussollier\DOC\PPE\PPE_3\Application_Technicien_EscapeGame\CoucheModeleMetier\obj\Debug\netcoreapp2.1\ApplicationTestsCouches.pdb
