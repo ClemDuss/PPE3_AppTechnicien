@@ -37,7 +37,7 @@ namespace ModeleMetier.model
 
         public Ville SelectById(int id)
         {
-            DataTable table = _myDbal.Select(_tableDB + "where id=" + id);
+            DataTable table = _myDbal.Select(_tableDB + " where id=" + id);
             Ville uneVille = new Ville();
             DataRow line = table.Rows[0];
 

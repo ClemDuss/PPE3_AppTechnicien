@@ -36,13 +36,13 @@ namespace ModeleMetier.model
                 {
                     foreach (Utilisateur c in lesClients)
                     {
-                        if (c.Id == Convert.ToInt32(line["idClient"]))
+                        if (c.Id == Convert.ToInt32(line["idUtilisateur"]))
                             resa.Client = c;
                     }
                 }
                 else
                 {
-                    resa.Client = _daoClient.SelectById(Convert.ToInt32(line["idClient"]));
+                    resa.Client = _daoClient.SelectById(Convert.ToInt32(line["idUtilisateur"]));
                 }
                 resa.MontantRetireCredit = Convert.ToDouble(line["montantRetireCredit"]);
                 if(lesParties != null)

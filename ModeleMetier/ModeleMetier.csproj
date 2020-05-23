@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="metier\Transaction.cs" />
     <Compile Include="metier\Utilisateurs.cs" />
     <Compile Include="metier\EtatCompte.cs" />
     <Compile Include="metier\InfosSupPersonnel.cs" />
@@ -73,11 +74,11 @@
     <Compile Include="metier\Salle.cs" />
     <Compile Include="metier\Theme.cs" />
     <Compile Include="metier\Ville.cs" />
+    <Compile Include="model\daoEtatCompte.cs" />
     <Compile Include="model\daoInfosSupPersonnel.cs" />
     <Compile Include="model\daoUtilisateurs.cs" />
     <Compile Include="model\daoObstacles.cs" />
     <Compile Include="model\daoPartie.cs" />
-    <Compile Include="model\daoPersonnel.cs" />
     <Compile Include="model\daoReservation.cs" />
     <Compile Include="model\daoRole.cs" />
     <Compile Include="model\daoSalles.cs" />

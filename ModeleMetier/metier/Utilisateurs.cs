@@ -57,10 +57,12 @@ namespace ModeleMetier.metier
         public string Tel { get => _tel; set => _tel = value; }
         public DateTime DateNaissance { get => _dateNaissance; set => _dateNaissance = value; }
         public EtatCompte EtatCompte { get => _etatCompte; set => _etatCompte = value; }
+        public string Identifiant { get => _identifiant; set => _identifiant = value; }
+        public bool Personnel { get => _personnel; set => _personnel = value; }
 
         public override string ToString()
         {
-            return Nom + " " + Prenom;
+            return Prenom + " " + Nom;
         }
     }
 }

@@ -21,11 +21,11 @@ namespace Application_Technicien_EscapeGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(daoUtilisateurs theDaoClient, daoPersonnel theDaoPersonnel, daoRole theDaoRole, daoTheme theDaoTheme, daoVille theDaoVille, daoSalles theDaoSalles, daoMoyenPaiement theDaoMoyenPaiement, daoTransaction theDaoTransaction, daoReservation theDaoReservation, daoObstacles theDaoObstacles)
+        public MainWindow(daoEtatCompte theDaoEtatCompte, daoInfosSupPersonnel theDaoInfosSupPersonnel, daoObstacles theDaoObstacles, daoPartie theDaoPartie, daoReservation theDaoReservation, daoRole theDaoRole, daoSalles theDaoSalles, daoTheme theDaoTheme, daoTransaction theDaoTransaction, daoUtilisateurs theDaoUtilisateurs, daoVille theDaoVille) 
         {
             InitializeComponent();
 
-            viewModel.viewModel theViewModel = new viewModel.viewModel(theDaoClient, theDaoPersonnel, theDaoRole, theDaoTheme, theDaoVille, theDaoSalles, theDaoMoyenPaiement, theDaoTransaction, theDaoReservation, theDaoObstacles, frm);
+            viewModel.viewModel theViewModel = new viewModel.viewModel(theDaoEtatCompte, theDaoInfosSupPersonnel, theDaoObstacles, theDaoPartie, theDaoReservation, theDaoRole, theDaoSalles, theDaoTheme, theDaoTransaction, theDaoUtilisateurs, theDaoVille, frm);
 
             principale.DataContext = theViewModel;
             //grd_login.DataContext = theViewModel.ViewLogin;

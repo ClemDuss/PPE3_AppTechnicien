@@ -4,28 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using viewModel;
+using System.Windows;
 using ModeleMetier.model;
 using ModeleMetier.metier;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace viewModel
 {
     public class viewLogin : viewModelBase
     {
-        private daoUtilisateurs _daoUtilisateur;
+        private daoUtilisateurs _daoUtilisateurs;
         private daoInfosSupPersonnel _daoInfosSupPersonnel;
         private Utilisateur _user;
+
+        public bool isUserConnected;
 
         private string _pseudo;
 
         private ICommand loginCommand;
 
-        private string _visibility;
+        private Visibility _loginViewVisibility;
 
         public viewLogin(daoUtilisateurs theDaoUtilisateurs, daoInfosSupPersonnel theDaoInfosSupPersonnel, List<Ville> lesVilles, List<Role> lesRoles)
         {
-            _daoUtilisateur = theDaoUtilisateurs;
+            _daoUtilisateurs = theDaoUtilisateurs;
             _daoInfosSupPersonnel = theDaoInfosSupPersonnel;
+            IsUserConnected = false;
         }
 
         public viewLogin TheView
@@ -33,6 +38,18 @@ namespace viewModel
             get
             {
                 return this;
+            }
+        }
+
+        public bool IsUserConnected
+        {
+            get
+            {
+                return isUserConnected;
+            }
+            set
+            {
+                isUserConnected = value;
             }
         }
 
@@ -49,22 +66,22 @@ namespace viewModel
 
         public void loginUser()
         {
-            if (_daoPersonnel.PseudoExists(Pseudo))
+            if (Pseudo.Length > 0)
             {
-                Visibility = "Hidden";
+
             }
         }
 
-        public string Visibility
+        public Visibility VisibilityLogin
         {
             get
             {
-                return _visibility;
+                return _loginViewVisibility;
             }
             set
             {
-                _visibility = value;
-                OnPropertyChanged("Visibility");
+                _loginViewVisibility = value;
+                OnPropertyChanged("VisibilityLogin");
             }
         }
 

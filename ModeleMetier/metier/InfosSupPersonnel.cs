@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ModeleMetier.metier
 {
-    class InfosSupPersonnel
+    public class InfosSupPersonnel
     {
         private int _id;
-        private Utilisateur _client;
+        private Utilisateur _utilisateur;
         private Role _role;
         private Ville _ville;
 
@@ -21,13 +21,13 @@ namespace ModeleMetier.metier
         public InfosSupPersonnel(int id, Utilisateur client, Role role, Ville ville)
         {
             _id = id;
-            _client = client;
+            _utilisateur = client;
             _role = role;
             _ville = ville;
         }
 
         public int Id { get => _id; set => _id = value; }
-        public Utilisateur Client { get => _client; set => _client = value; }
+        public Utilisateur Utilisateur { get => _utilisateur; set => _utilisateur = value; }
         public Role Role { get => _role; set => _role = value; }
         public Ville Ville { get => _ville; set => _ville = value; }
     }

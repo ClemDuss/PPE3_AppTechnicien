@@ -28,9 +28,12 @@ namespace viewModel
         private daoTransaction _daoTransaction;
         private daoReservation _daoReservation;
         private daoObstacles _daoObstacles;
+        private daoPartie _daoParties;
+        private daoEtatCompte _daoEtatComptes;
 
         private Utilisateur _client;
         private Utilisateur _user;
+        private InfosSupPersonnel _userInfosSupPersonnel;
         private Role _role;
         private Theme _theme;
         private Ville _ville;
@@ -45,8 +48,9 @@ namespace viewModel
 
         private int _nbSalles;
 
-        public viewModel(daoUtilisateurs theDaoUtilisateurs, daoInfosSupPersonnel theDaoInfosSupPersonnel, daoRole theDaoRole, daoTheme theDaoTheme, daoVille theDaoVille, daoSalles theDaoSalles, daoReservation theDaoReservation, daoObstacles theDaoObstacles, Window frm)
+        public viewModel(daoEtatCompte theDaoEtatCompte, daoInfosSupPersonnel theDaoInfosSupPersonnel, daoObstacles theDaoObstacles, daoPartie theDaoPartie, daoReservation theDaoReservation, daoRole theDaoRole, daoSalles theDaoSalles, daoTheme theDaoTheme, daoTransaction theDaoTransaction, daoUtilisateurs theDaoUtilisateurs, daoVille theDaoVille, Window frm)
         {
+           
             _daoUtilisateurs = theDaoUtilisateurs;
             _daoInfosSupPersonnel = theDaoInfosSupPersonnel;
             _daoRole = theDaoRole;
@@ -55,6 +59,9 @@ namespace viewModel
             _daoSalles = theDaoSalles;
             _daoReservation = theDaoReservation;
             _daoObstacles = theDaoObstacles;
+            _daoEtatComptes = theDaoEtatCompte;
+            _daoTransaction = theDaoTransaction;
+            _daoParties = theDaoPartie;
 
             Villes = _daoVille.SelectAll();
             Roles = _daoRole.SelectAll();
@@ -128,6 +135,8 @@ namespace viewModel
                 OnPropertyChanged("Form");
             }
         }
+        public Ville Ville { get => _ville; set => _ville = value; }
+        public InfosSupPersonnel UserInfosSupPersonnel { get => _userInfosSupPersonnel; set => _userInfosSupPersonnel = value; }
 
 
         public void HideAll()
@@ -179,43 +188,52 @@ namespace viewModel
         {
             if (Pseudo.Length > 0)
             {
-                if (_daoPersonnel.PseudoExists(Pseudo))
+                if (_daoUtilisateurs.PseudoExists(Pseudo))
                 {
-                    VisibilityLogin = Visibility.Hidden;
-                    VisibilityHome = Visibility.Visible;
-
-                    User = _daoPersonnel.SelectByPseudo(Pseudo, Roles, Villes);
-                    UserCity = User.Ville;
-
-                    Form.Title += " | " + User.ToString();
-
-                    UserPseudo = User.Identifiant;
-                    UserNom = User.Nom;
-                    UserPrenom = User.Prenom;
-                    UserEmail = User.Mail;
-                    UserTel = User.Tel.ToString();
-                    UserDDN = User.DateNaissance.ToString("dd-MM-yyyy");
-
-                    //WindowState = WindowState.Maximized;
-                    Form.WindowState = WindowState.Maximized;
-                    Form.Icon = new BitmapImage(new Uri("pack://application:,,,/images/mtn_A_red.ico"));
-
-                    NbSalles = _daoSalles.Count(User.Ville);
-
-                    if (NbSalles == 1)
+                    Utilisateur tempUser = _daoUtilisateurs.SelectByPseudo(Pseudo);
+                    if (tempUser.Personnel)
                     {
-                        VisibilityPlanning1 = Visibility.Visible;
-                    }
-                    else if (NbSalles == 2)
-                    {
-                        VisibilityPlanning2 = Visibility.Visible;
-                    }
-                    else if (NbSalles == 4)
-                    {
-                        VisibilityPlanning4 = Visibility.Visible;
-                    }
+                        VisibilityLogin = Visibility.Hidden;
+                        VisibilityHome = Visibility.Visible;
 
-                    Obstacles = _daoObstacles.selectByVille(User.Ville);
+                        User = tempUser;
+                        UserInfosSupPersonnel = _daoInfosSupPersonnel.SelectByUser(User);
+                        UserCity = UserInfosSupPersonnel.Ville;
+
+                        Form.Title += " | " + User.ToString();
+
+                        UserPseudo = User.Identifiant;
+                        UserNom = User.Nom;
+                        UserPrenom = User.Prenom;
+                        UserEmail = User.Mail;
+                        UserTel = User.Tel.ToString();
+                        UserDDN = User.DateNaissance.ToString("dd-MM-yyyy");
+
+                        //WindowState = WindowState.Maximized;
+                        Form.WindowState = WindowState.Maximized;
+                        Form.Icon = new BitmapImage(new Uri("pack://application:,,,/images/mtn_A_red.ico"));
+
+                        NbSalles = _daoSalles.Count(UserInfosSupPersonnel.Ville);
+
+                        if (NbSalles == 1)
+                        {
+                            VisibilityPlanning1 = Visibility.Visible;
+                        }
+                        else if (NbSalles == 2)
+                        {
+                            VisibilityPlanning2 = Visibility.Visible;
+                        }
+                        else if (NbSalles == 4)
+                        {
+                            VisibilityPlanning4 = Visibility.Visible;
+                        }
+
+                        Obstacles = _daoObstacles.selectByVille(UserInfosSupPersonnel.Ville);
+                    }
+                    else
+                    {
+                        ErrorPseudo.Content = "Vous n'êtes pas membre du personnel";
+                    }
                 }
                 else
                 {
@@ -442,7 +460,7 @@ namespace viewModel
 
         public void dispPlanning()
         {
-            NbSalles = _daoSalles.Count(User.Ville);
+            NbSalles = _daoSalles.Count(UserInfosSupPersonnel.Ville);
 
             if (NbSalles == 1)
             {
@@ -650,7 +668,7 @@ namespace viewModel
             {
                 _selectedClient = value;
                 OnPropertyChanged("SelectedClient");
-                CreditsClient = _daoClient.Credit(SelectedClient, Clients, Parties, MoyensPaiement, _daoTransaction, _daoReservation).ToString();
+                CreditsClient = _daoUtilisateurs.Credit(SelectedClient, Clients, Parties, _daoTransaction, _daoReservation).ToString();
             }
         }
 
@@ -974,7 +992,7 @@ namespace viewModel
 
         public void RefreshUser()
         {
-            User = _daoPersonnel.SelectById(User.Id, Roles, Villes);
+            User = _daoUtilisateurs.SelectById(User.Id);
             UserPseudo = User.Identifiant;
             UserTel = User.Tel;
             UserEmail = User.Mail;
@@ -1013,7 +1031,7 @@ namespace viewModel
 
         public void validChangeParams()
         {
-            _daoPersonnel.updateUser(User, TempPseudo, TempEmail, TempTel, TempDDN);
+            _daoUtilisateurs.updateUser(User, TempPseudo, TempEmail, TempTel, TempDDN);
             VisibilityChangeParams = Hidden();
             RefreshUser();
         }

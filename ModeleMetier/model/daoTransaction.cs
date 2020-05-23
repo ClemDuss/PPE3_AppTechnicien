@@ -12,17 +12,15 @@ namespace ModeleMetier.model
     {
         private dbal _myDbal;
         private string _tableDB = "transactionsCredits";
-        private daoUtilisateurs _daoClient;
-        private daoMoyenPaiement _daoMoyenPaiement;
+        private daoUtilisateurs _daoUtilisateurs;
 
         public daoTransaction(dbal theDbal)
         {
             _myDbal = theDbal;
-            _daoClient = new daoUtilisateurs(_myDbal);
-            _daoMoyenPaiement = new daoMoyenPaiement();
+            _daoUtilisateurs = new daoUtilisateurs(_myDbal);
         }
 
-        public List<Transaction> selectAll(List<Utilisateur> lesClients, List<MoyenPaiement> lesMoyensPaiements)
+        public List<Transaction> selectAll(List<Utilisateur> lesClients)
         {
             List<Transaction> lesTransactions = new List<Transaction>();
 
@@ -36,28 +34,17 @@ namespace ModeleMetier.model
                 {
                     foreach (Utilisateur c in lesClients)
                     {
-                        if (c.Id == Convert.ToInt32(line["idClient"]))
-                            uneTransaction.Client = c;
+                        if (c.Id == Convert.ToInt32(line["idUtilisateur"]))
+                            uneTransaction.User = c;
                     }
                 }
                 else
                 {
-                    uneTransaction.Client = _daoClient.SelectById(Convert.ToInt32(line["idClient"]));
+                    uneTransaction.User = _daoUtilisateurs.SelectById(Convert.ToInt32(line["idUtilisateur"]));
                 }
                 uneTransaction.Montant = Convert.ToDouble(line["montantTransaction"]);
-                if (lesMoyensPaiements != null)
-                {
-                    foreach (MoyenPaiement m in lesMoyensPaiements)
-                    {
-                        if (m.Id == Convert.ToInt32(line["idMoyenPaiement"]))
-                            uneTransaction.MoyenPaiement = m;
-                    }
-                }
-                else
-                {
-                    uneTransaction.MoyenPaiement = _daoMoyenPaiement.SelectById(Convert.ToInt32(line["idMoyenPaiement"]));
-                }
-                uneTransaction.DateTransaction = Convert.ToDateTime(line["dateTransaction"]);
+                uneTransaction.IdMoyenPaiement = Convert.ToInt32(line["idMoyenPaiement"]);
+                uneTransaction.Date = Convert.ToDateTime(line["dateTransaction"]);
 
                 lesTransactions.Add(uneTransaction);
             }
