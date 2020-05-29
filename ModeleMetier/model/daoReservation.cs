@@ -60,5 +60,11 @@ namespace ModeleMetier.model
 
             return lesResa;
         }
+
+        public void Insert(Utilisateur user, double prix, Partie partie, DateTime date)
+        {
+            string dateReservation = "" + date.Year + "-" + date.Month + "-" + date.Day + " " + date.Hour + ":" + date.Minute + ":" + date.Second;
+            _myDbal.Insert(_tableDB + "(idUtilisateur, montantRetireCredit, idPartie, dateReservation) values (" + user.Id + ", " + prix + ", " + partie.Id + ", '" + dateReservation + "');");
+        }
     }
 }

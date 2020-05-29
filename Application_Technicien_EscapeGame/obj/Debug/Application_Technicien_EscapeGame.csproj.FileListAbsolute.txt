@@ -83,3 +83,8 @@ D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_Esca
 D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\obj\Debug\Application_Technicien_EscapeGame.Properties.Resources.resources
 D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\obj\Debug\Application_Technicien_EscapeGame.csproj.GenerateResource.cache
 D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\obj\Debug\Application_Technicien_EscapeGame.csproj.CopyComplete
+D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\bin\Debug\MaterialDesignColors.dll
+D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\bin\Debug\MaterialDesignColors.pdb
+D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\Dev\C#\PPE\PPE3\Application_Technicien_EscapeGame\Application_Technicien_EscapeGame\bin\Debug\MaterialDesignThemes.Wpf.xml

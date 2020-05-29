@@ -21,13 +21,17 @@ namespace Application_Technicien_EscapeGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(daoEtatCompte theDaoEtatCompte, daoInfosSupPersonnel theDaoInfosSupPersonnel, daoObstacles theDaoObstacles, daoPartie theDaoPartie, daoReservation theDaoReservation, daoRole theDaoRole, daoSalles theDaoSalles, daoTheme theDaoTheme, daoTransaction theDaoTransaction, daoUtilisateurs theDaoUtilisateurs, daoVille theDaoVille) 
+        public MainWindow(daoEtatCompte theDaoEtatCompte, daoInfosSupPersonnel theDaoInfosSupPersonnel, daoObstacles theDaoObstacles, daoPartie theDaoPartie, daoReservation theDaoReservation, daoRole theDaoRole, daoSalles theDaoSalles, daoTheme theDaoTheme, daoTransaction theDaoTransaction, daoUtilisateurs theDaoUtilisateurs, daoVille theDaoVille, daoReservationAffichage theDaoReservationAffichage, daoParticipants theDaoParticipants, daoObstaclesParties theDaoObstaclesParties) 
         {
             InitializeComponent();
 
-            viewModel.viewModel theViewModel = new viewModel.viewModel(theDaoEtatCompte, theDaoInfosSupPersonnel, theDaoObstacles, theDaoPartie, theDaoReservation, theDaoRole, theDaoSalles, theDaoTheme, theDaoTransaction, theDaoUtilisateurs, theDaoVille, frm);
+            viewModel.viewModel theViewModel = new viewModel.viewModel(theDaoEtatCompte, theDaoInfosSupPersonnel, theDaoObstacles, theDaoPartie, theDaoReservation, theDaoRole, theDaoSalles, theDaoTheme, theDaoTransaction, theDaoUtilisateurs, theDaoVille, theDaoReservationAffichage, theDaoParticipants, theDaoObstaclesParties, frm);
 
             principale.DataContext = theViewModel;
+            SolidColorBrush fillRect = new SolidColorBrush();
+            fillRect.Color = Color.FromRgb(0, 0, 255);
+
+
             //grd_login.DataContext = theViewModel.ViewLogin;
             /*Label[] scoresLabelArr = new Label[5];
             int location = 98;
@@ -70,7 +74,7 @@ namespace Application_Technicien_EscapeGame
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            planning2.Visibility = Visibility.Hidden;
+            planning1.Visibility = Visibility.Hidden;
             Reservation.Visibility = Visibility.Visible;
         }
     }

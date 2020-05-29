@@ -36,13 +36,13 @@ namespace ModeleMetier.model
                 {
                     foreach (Utilisateur c in lesClients)
                     {
-                        if (c.Id == Convert.ToInt32(line["idClient"]))
+                        if (c.Id == Convert.ToInt32(line["idUtilisateurAcheteur"]))
                             unePartie.Client = c;
                     }
                 }
                 else
                 {
-                    unePartie.Client = _daoClient.SelectById(Convert.ToInt32(line["idClient"]));
+                    unePartie.Client = _daoClient.SelectById(Convert.ToInt32(line["idUtilisateurAcheteur"]));
                 }
                 unePartie.HeureEtJourPartie = Convert.ToDateTime(line["heureEtJourPartie"]);
                 if(lesSalles != null)
@@ -60,6 +60,63 @@ namespace ModeleMetier.model
             }
 
             return lesParties;
+        }
+
+        public Partie SelectById(int id, List<Utilisateur> lesClients)
+        {
+            Partie unePartie = new Partie();
+
+            DataTable table = _myDbal.Select(_tableDB + " where id=" + id);
+
+            DataRow line = table.Rows[0];
+            unePartie.Id = Convert.ToInt32(line["id"]);
+            if (lesClients != null)
+            {
+                foreach (Utilisateur c in lesClients)
+                {
+                    if (c.Id == Convert.ToInt32(line["idUtilisateurAcheteur"]))
+                        unePartie.Client = c;
+                }
+            }
+            else
+            {
+                unePartie.Client = _daoClient.SelectById(Convert.ToInt32(line["idUtilisateurAcheteur"]));
+            }
+            unePartie.HeureEtJourPartie = Convert.ToDateTime(line["heureEtJourPartie"]);
+            unePartie.Salle = _daoSalle.selectById(Convert.ToInt32(line["idSalle"]));
+
+            return unePartie;
+        }
+
+        public Partie SelectDernierePartie(List<Utilisateur> lesClients)
+        {
+            Partie unePartie = new Partie();
+
+            DataTable table = _myDbal.Select(_tableDB + " order by id desc");
+
+            DataRow line = table.Rows[0];
+            unePartie.Id = Convert.ToInt32(line["id"]);
+            if (lesClients != null)
+            {
+                foreach (Utilisateur c in lesClients)
+                {
+                    if (c.Id == Convert.ToInt32(line["idUtilisateurAcheteur"]))
+                        unePartie.Client = c;
+                }
+            }
+            else
+            {
+                unePartie.Client = _daoClient.SelectById(Convert.ToInt32(line["idUtilisateurAcheteur"]));
+            }
+            unePartie.HeureEtJourPartie = Convert.ToDateTime(line["heureEtJourPartie"]);
+            unePartie.Salle = _daoSalle.selectById(Convert.ToInt32(line["idSalle"]));
+
+            return unePartie;
+        }
+
+        public void Insert(Utilisateur user, DateTime date, string heure, Salle salle)
+        {
+            _myDbal.Insert(_tableDB + "(idUtilisateurAcheteur, heureEtJourPartie, idSalle) values (" + user.Id + ", '" + date.Year + "-" + date.Month + "-" + date.Day + " " + heure.Split('h')[0] + ":00:00', " + salle.Id + ");");
         }
     }
 }

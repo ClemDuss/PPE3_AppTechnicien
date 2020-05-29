@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:Application_Technicien_EscapeGame"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="{Binding FrmTitle}" Height="540" Width="960"
         WindowStyle="SingleBorderWindow"
@@ -224,7 +225,7 @@
             <!--<Rectangle Fill="#FFB8B8B8" Stroke="#FFB8B8B8" Grid.Column="0" Grid.Row="0"/>-->
             <Rectangle Fill="#d10000" Stroke="#d10000" Grid.Column="0" Grid.Row="0"/>
             <!--<Label Content="Escape Game - Annecy" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="45"/>-->
-            <Image Source="images/logo_escape_game_white.png" Grid.Column="0" Grid.Row="0" MaxWidth="700" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="70 0 70 30"/>
+            <Image Source="images/logo_escape_game_white.png" Grid.Column="0" Grid.Row="0" MaxWidth="700" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="70 5 70 35"/>
             <Grid HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -255,66 +256,6 @@
             </Image>
             
             <!--Content-->
-            <Grid x:Name="planning2" Grid.Row="1" Grid.Column="0" Margin="0 0" Visibility="{Binding VisibilityPlanning2}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="100"/>
-                    <RowDefinition Height="5*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-
-                <Label Content="Date sélectionnée" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Margin="0 0 0 40" Style="{StaticResource FontFamilyLabel}"/>
-                <DatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Width="180" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDate="{Binding SelectedDate}" BorderBrush="White" FontSize="25" Margin="0 40 0 0" Style="{StaticResource FontFamilyDatePicker}"/>
-
-                <Label Content="9h00" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="10h00" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="2" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="11h00" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="3" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="12h00" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="4" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="13h00" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="5" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="14h00" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="6" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="15h00" Grid.Row="1" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="7" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="16h00" Grid.Row="1" Grid.Column="8" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="8" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="17h00" Grid.Row="1" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="9" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="18h00" Grid.Row="1" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="10" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                <Label Content="19h00" Grid.Row="1" Grid.Column="11" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
-                <Rectangle Grid.Row="1" Grid.Column="11" Grid.RowSpan="4" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                
-                <Label Content="Salle 1" Grid.Row="2" Grid.Column="0" FontSize="20" Margin="0 20 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource FontFamilyLabel}"/>
-                <Label Content="Nom" Grid.Row="2" Grid.Column="0" FontSize="20" Margin="0 0 0 20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource FontFamilyLabel}"/>
-
-                <Label Content="Salle 2" Grid.Row="4" Grid.Column="0" FontSize="20" Margin="0 20 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource FontFamilyLabel}"/>
-                <Label Content="Nom" Grid.Row="4" Grid.Column="0" FontSize="20" Margin="0 0 0 20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource FontFamilyLabel}"/>
-
-                <Rectangle Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="1 20" Fill="Red" Width="500" HorizontalAlignment="Left" MouseDown="Rectangle_MouseDown"/>
-                <Label Content="DUSSOLLIER Clement" Grid.Column="1" Grid.Row="2" Margin="5 25" Foreground="White" HorizontalAlignment="Left" MouseDown="Rectangle_MouseDown"/>
-                <Label Content="9h - 12h35" Grid.Column="1" Grid.Row="2" Margin="5 45 0 0" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" MouseDown="Rectangle_MouseDown"/>
-            </Grid>
             <!--Planning pour une salle-->
             <Grid x:Name="planning1" Grid.Row="1" Grid.Column="0" Margin="0 0" Visibility="{Binding VisibilityPlanning1}">
                 <Grid.RowDefinitions>
@@ -336,7 +277,20 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10 10" Content="{materialDesign:PackIcon ChevronUp}" Command="{Binding DownRoom}"/>
+                    <Label Grid.Row="1" Content="Salle :" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 20" Style="{StaticResource FontFamilyLabel}"/>
+                    <Label Grid.Row="1" Content="{Binding SelectedSalle.Nom}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0" Style="{StaticResource FontFamilyLabel}"/>
+                    <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10 10" Content="{materialDesign:PackIcon ChevronDown}" Command="{Binding UpRoom}"/>
+                </Grid>
 
                 <Label Content="Date sélectionnée" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Margin="0 0 0 40" Style="{StaticResource FontFamilyLabel}"/>
                 <DatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Width="180" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="White" FontSize="25" SelectedDate="{Binding SelectedDate}" Margin="0 40 0 0" Style="{StaticResource FontFamilyDatePicker}"/>
@@ -363,31 +317,175 @@
                 <Rectangle Grid.Row="1" Grid.Column="10" Grid.RowSpan="2" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
                 <Label Content="19h00" Grid.Row="1" Grid.Column="11" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="3 0 3 0" Style="{StaticResource FontFamilyLabel}"/>
                 <Rectangle Grid.Row="1" Grid.Column="11" Grid.RowSpan="2" HorizontalAlignment="Left" Width="2" Fill="Black" Margin="-1 0 0 0"/>
-                
-                <Label Content="Salle 1" Grid.Row="2" Grid.Column="0" FontSize="20" Margin="0 20 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource FontFamilyLabel}"/>
-                <Label Content="Nom" Grid.Row="2" Grid.Column="0" FontSize="20" Margin="0 0 0 20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource FontFamilyLabel}"/>
 
-                <Rectangle Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="0 20" Fill="Red" Width="500" HorizontalAlignment="Left">
+                <Rectangle Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect9}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <i:InvokeCommandAction Command="{Binding OpenResa}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Rectangle>
-                <Label Content="DUSSOLLIER Clement" Grid.Column="1" Grid.Row="2" Margin="5 25" Foreground="White" HorizontalAlignment="Left">
+                <Label Content="{Binding Resa9.User}" Grid.Column="1" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <i:InvokeCommandAction Command="{Binding OpenResa}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Label>
-                <Label Content="9h - 12h35" Grid.Column="1" Grid.Row="2" Margin="5 45 0 0" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+                <Rectangle Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect10}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa10.User}" Grid.Column="2" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDown">
                             <i:InvokeCommandAction Command="{Binding OpenResa}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Label>
+
+                <Rectangle Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect11}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa11.User}" Grid.Column="3" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect12}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa12.User}" Grid.Column="4" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect13}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa13.User}" Grid.Column="5" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect14}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa14.User}" Grid.Column="6" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="7" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect15}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa15.User}" Grid.Column="7" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect16}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa16.User}" Grid.Column="8" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="9" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect17}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa17.User}" Grid.Column="9" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect18}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa18.User}" Grid.Column="10" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="11" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 20 0 20" Fill="{Binding FillRect19}" Width="500" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Rectangle>
+                <Label Content="{Binding Resa19.User}" Grid.Column="11" Grid.Row="2" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding OpenResa}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+
+                <Rectangle Grid.Column="12" Grid.Row="2" Grid.ColumnSpan="1" Margin="-1 21 0 21" HorizontalAlignment="Left" Stroke="Black" StrokeThickness="2"/>
+
+                <Button Grid.Row="4" Grid.ColumnSpan="13" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Nouvelle réservation" Command="{Binding OpenResa}"/>
             </Grid>
             
             <!--Page de réservation-->
@@ -422,7 +520,7 @@
                         <Image Source="images/euro.png" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
                         <Label Content="{Binding CreditsClient}" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Margin="25 0 0 0" Style="{StaticResource FontFamilyLabel}"/>
 
-                        <Label Content="Nombre de joueurs :" Grid.Row="1" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center" Style="{StaticResource FontFamilyLabel}"/>
+                        <!--<Label Content="Nombre de joueurs :" Grid.Row="1" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Center" Style="{StaticResource FontFamilyLabel}"/>
                         <ComboBox Grid.Row="1" HorizontalAlignment="Left" Margin="157 0 0 0" Height="25" Width="138" FontSize="15" Style="{StaticResource FontFamilyComboBox}" SelectedIndex="{Binding SelectedNbJoueurIndex}">
                             <ComboBoxItem Content="2"/>
                             <ComboBoxItem Content="3"/>
@@ -430,12 +528,12 @@
                             <ComboBoxItem Content="5"/>
                             <ComboBoxItem Content="6"/>
                             <ComboBoxItem Content="7"/>
-                        </ComboBox>
+                        </ComboBox>-->
 
                         <Label Content="Date :" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15" Style="{StaticResource FontFamilyLabel}"/>
                         <DatePicker SelectedDate="{Binding SelectedDate}" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="53 0 0 0" FontSize="15" Width="115" Style="{StaticResource FontFamilyDatePicker}"/>
                         <Label Content="Heure :"  Grid.Row="2" Margin="165 0 0 0" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource FontFamilyLabel}"/>
-                        <ComboBox Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Height="25" Width="70" Margin="225 0 0 0" Style="{StaticResource FontFamilyComboBox}" SelectedIndex="{Binding SelectedHorraireIndex}" SelectedValue="{Binding SelectedHoraire}" ItemsSource="{Binding HorairesDispos}"/>
+                        <ComboBox Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Height="25" Width="70" Margin="225 0 0 0" Style="{StaticResource FontFamilyComboBox}" SelectedIndex="{Binding SelectedHorraireIndex}" SelectedValue="{Binding SelecteHoraire}" ItemsSource="{Binding HorairesDispos}"/>
 
 
                         <Button Content="Continuer" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10 5" Style="{StaticResource FontFamilyButton}" Command="{Binding NextResa}"/>
@@ -450,7 +548,21 @@
                             <RowDefinition Height="270"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        <ListBox SelectionMode="Multiple" ItemsSource="{Binding Obstacles}" SelectedItem="{Binding SelectedObstacles}"/>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ListBox Grid.Column="0" ItemsSource="{Binding Obstacles}" SelectedItem="{Binding SelectedObstacleToAdd}"/>
+
+                            <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 30" IsEnabled="{Binding EnableAddObstacleButton}" Command="{Binding AddObstacleButton}" Content="{materialDesign:PackIcon Kind=ChevronDoubleRight}"/>
+                            <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 30 0 0" IsEnabled="{Binding EnableRemoveObstacleButton}" Command="{Binding RemoveObstacleButton}" Content="{materialDesign:PackIcon Kind=ChevronDoubleLeft}"/>
+
+                            <ListBox Grid.Column="2" ItemsSource="{Binding SelectedObstacles}" SelectedItem="{Binding SelectedObstacleToRemove}"/>
+                        </Grid>
 
                         <Button Content="Continuer" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10 5" Style="{StaticResource FontFamilyButton}" Command="{Binding NextResa}"/>
                         <Button Content="Annuler" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10 5" Margin="0 0 82 0" Style="{StaticResource FontFamilyButton}" Command="{Binding CancelResa}"/>
@@ -462,14 +574,24 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="240"/>
+                            <RowDefinition Height="270"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
 
-                        <TextBox Text="Rechercher" Style="{StaticResource FontFamilyTextBox}" FontSize="15" Padding="6 5 5 0"/>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <ListBox Grid.Column="0" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedParticipantToAdd}"/>
 
-                        <ListBox Grid.Row="1" ItemsSource="{Binding Clients}" SelectionMode="Multiple" SelectedItem="{Binding SelectedParticipants}"/>
+                            <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 30" IsEnabled="{Binding EnableAddParticipantButton}" Command="{Binding AddParticipantButton}" Content="{materialDesign:PackIcon Kind=ChevronDoubleRight}"/>
+                            <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 30 0 0" IsEnabled="{Binding EnableRemoveParticipantButton}" Command="{Binding RemoveParticipantButton}" Content="{materialDesign:PackIcon Kind=ChevronDoubleLeft}"/>
+
+                            <ListBox Grid.Column="2" ItemsSource="{Binding SelectedParticipants}" SelectedItem="{Binding SelectedParticipantToRemove}"/>
+                        </Grid>
 
                         <Button Content="Terminer" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10 5" Style="{StaticResource FontFamilyButton}" Command="{Binding NextResa}"/>
                         <Button Content="Annuler" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10 5" Margin="0 0 74 0" Style="{StaticResource FontFamilyButton}" Command="{Binding CancelResa}"/>
@@ -515,7 +637,8 @@
 
                             <Rectangle Fill="Black" Grid.Row="4" Grid.ColumnSpan="3" Height="1" VerticalAlignment="Top"/>
                             <Label Content="Total" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource FontFamilyLabel}" FontSize="15"/>
-                            <Label Name="prixTotal" Content="60 €" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource FontFamilyLabel}" FontSize="15"/>
+                            <Label Name="prixTotal" Content="{Binding PrixTotal}" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 12 0" Style="{StaticResource FontFamilyLabel}" FontSize="15"/>
+                            <Label Content="€" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource FontFamilyLabel}" FontSize="15"/>
                         </Grid>
 
 

@@ -134,6 +134,22 @@ namespace ModeleMetier.model
             return table;
         }
 
+
+        /// <summary>
+        /// SELECT
+        /// </summary>
+        /// <param name="query">all your select command</param>
+        /// <returns></returns>
+        public DataTable SelectCustom(string query)
+        {
+            MySqlDataAdapter adapter = new MySqlDataAdapter(query, _connection);
+            DataSet result = new DataSet();
+            adapter.Fill(result);
+            DataTable table = result.Tables[0];
+
+            return table;
+        }
+
         public void truncateTable(string table)
         {
             if (this.OpenConnection())

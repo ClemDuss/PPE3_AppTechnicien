@@ -62,6 +62,38 @@ namespace ModeleMetier.model
             return uneSalle;
         }
 
+        public List<Salle> SelectByVille(Ville theVille, List<Theme> lesThemes = null)
+        {
+            List<Salle> allRooms = new List<Salle>();
+            DataTable table = _myDbal.Select(_tableDB + " where idVille=" + theVille.Id);
+            foreach(DataRow line in table.Rows)
+            {
+                if(Convert.ToInt32(line["idVille"]) == theVille.Id)
+                {
+                    Salle uneSalle = new Salle();
+                    uneSalle.Id = Convert.ToInt32(line["id"]);
+                    uneSalle.Ville = theVille;
+                    if(lesThemes != null)
+                    {
+                        foreach (Theme t in lesThemes)
+                        {
+                            if (t.Id == Convert.ToInt32(line["idThemeActuel"]))
+                                uneSalle.Theme = t;
+                        }
+                    }
+                    else
+                    {
+                        uneSalle.Theme = _daoTheme.SelectById(Convert.ToInt32(line["idThemeActuel"]));
+                    }
+                    uneSalle.Nom = line["nom"].ToString();
+                    uneSalle.HeureOuverture = Convert.ToDateTime(line["heureOuverture"]);
+                    uneSalle.HeureFermeture = Convert.ToDateTime(line["heureFermeture"]);
+                    allRooms.Add(uneSalle);
+                }
+            }
+            return allRooms;
+        }
+
         public int Count(Ville uneVille = null)
         {
             int i = 0;

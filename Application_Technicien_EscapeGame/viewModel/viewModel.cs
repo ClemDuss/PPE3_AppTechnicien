@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace viewModel
 {
@@ -30,6 +31,9 @@ namespace viewModel
         private daoObstacles _daoObstacles;
         private daoPartie _daoParties;
         private daoEtatCompte _daoEtatComptes;
+        private daoReservationAffichage _daoReservationAffichage;
+        private daoParticipants _daoParticipants;
+        private daoObstaclesParties _daoObstaclesParties;
 
         private Utilisateur _client;
         private Utilisateur _user;
@@ -37,18 +41,21 @@ namespace viewModel
         private Role _role;
         private Theme _theme;
         private Ville _ville;
+        private Salle _selectedSalle;
+        private int _selectedSalleIndex;
 
         private List<Utilisateur> _clients;
         private List<Role> _roles;
         private List<Theme> _themes;
         private List<Ville> _villes;
         private List<Partie> _parties;
+        private List<Salle> _salles;
 
         private Window _form;
 
         private int _nbSalles;
 
-        public viewModel(daoEtatCompte theDaoEtatCompte, daoInfosSupPersonnel theDaoInfosSupPersonnel, daoObstacles theDaoObstacles, daoPartie theDaoPartie, daoReservation theDaoReservation, daoRole theDaoRole, daoSalles theDaoSalles, daoTheme theDaoTheme, daoTransaction theDaoTransaction, daoUtilisateurs theDaoUtilisateurs, daoVille theDaoVille, Window frm)
+        public viewModel(daoEtatCompte theDaoEtatCompte, daoInfosSupPersonnel theDaoInfosSupPersonnel, daoObstacles theDaoObstacles, daoPartie theDaoPartie, daoReservation theDaoReservation, daoRole theDaoRole, daoSalles theDaoSalles, daoTheme theDaoTheme, daoTransaction theDaoTransaction, daoUtilisateurs theDaoUtilisateurs, daoVille theDaoVille, daoReservationAffichage theDaoReservationAffichage, daoParticipants theDaoParticipants, daoObstaclesParties theDaoObstaclesParties, Window frm)
         {
            
             _daoUtilisateurs = theDaoUtilisateurs;
@@ -62,6 +69,9 @@ namespace viewModel
             _daoEtatComptes = theDaoEtatCompte;
             _daoTransaction = theDaoTransaction;
             _daoParties = theDaoPartie;
+            _daoReservationAffichage = theDaoReservationAffichage;
+            _daoParticipants = theDaoParticipants;
+            _daoObstaclesParties = theDaoObstaclesParties;
 
             Villes = _daoVille.SelectAll();
             Roles = _daoRole.SelectAll();
@@ -71,7 +81,7 @@ namespace viewModel
 
             Form = frm;
             Form.Title = "Escape Game - Technicien";
-            Form.Icon = new BitmapImage(new Uri("pack://application:,,,/images/mtn_A.ico"));
+            Form.Icon = new BitmapImage(new Uri("pack://application:,,,/images/icon Escape Game cadre.ico"));
 
             WindowState = WindowState.Normal;
 
@@ -86,13 +96,7 @@ namespace viewModel
             UserCity = new Ville();
         }
 
-        public viewLogin ViewLogin
-        {
-            get
-            {
-                return _viewLogin;
-            }
-        }
+        public viewLogin ViewLogin { get=>_viewLogin; }
 
         public Utilisateur User { get => _user; set => _user = value; }
         public List<Utilisateur> Clients
@@ -137,6 +141,18 @@ namespace viewModel
         }
         public Ville Ville { get => _ville; set => _ville = value; }
         public InfosSupPersonnel UserInfosSupPersonnel { get => _userInfosSupPersonnel; set => _userInfosSupPersonnel = value; }
+        public List<Salle> Salles { get => _salles; set => _salles = value; }
+        public Salle SelectedSalle
+        {
+            get => _selectedSalle;
+            set
+            {
+                _selectedSalle = value;
+                OnPropertyChanged("SelectedSalle");
+                refreshResaAffichage();
+            }
+        }
+        public int SelectedSalleIndex { get => _selectedSalleIndex; set => _selectedSalleIndex = value; }
 
 
         public void HideAll()
@@ -211,24 +227,19 @@ namespace viewModel
 
                         //WindowState = WindowState.Maximized;
                         Form.WindowState = WindowState.Maximized;
-                        Form.Icon = new BitmapImage(new Uri("pack://application:,,,/images/mtn_A_red.ico"));
+                        Form.Icon = new BitmapImage(new Uri("pack://application:,,,/images/icon Escape Game cadre.ico"));
+
+                        Salles = _daoSalles.SelectByVille(UserCity);
+                        SelectedSalleIndex = 0;
+                        SelectedSalle = Salles[SelectedSalleIndex];
 
                         NbSalles = _daoSalles.Count(UserInfosSupPersonnel.Ville);
 
-                        if (NbSalles == 1)
-                        {
-                            VisibilityPlanning1 = Visibility.Visible;
-                        }
-                        else if (NbSalles == 2)
-                        {
-                            VisibilityPlanning2 = Visibility.Visible;
-                        }
-                        else if (NbSalles == 4)
-                        {
-                            VisibilityPlanning4 = Visibility.Visible;
-                        }
+                        VisibilityPlanning1 = Visibility.Visible;
 
                         Obstacles = _daoObstacles.selectByVille(UserInfosSupPersonnel.Ville);
+
+                        SelectedDate = DateTime.Now;
                     }
                     else
                     {
@@ -420,8 +431,346 @@ namespace viewModel
 
         #region PLANNING
         private Visibility _visibilityPlanning2, _visibilityPlanning1, _visibilityPlanning4, _visibilityPlanning;
-        private ICommand _openResa;
+        private ICommand _openResa, _upRooms, _downRooms;
         private DateTime _selectedDate = DateTime.Now;
+        private reservationAffichage _resa9, _resa10, _resa11, _resa12, _resa13, _resa14, _resa15, _resa16, _resa17, _resa18, _resa19;
+        private SolidColorBrush _fillRect9, _fillRect10, _fillRect11, _fillRect12, _fillRect13, _fillRect14, _fillRect15, _fillRect16, _fillRect17, _fillRect18, _fillRect19;
+
+        public SolidColorBrush FillRect9
+        {
+            get => _fillRect9;
+            set
+            {
+                _fillRect9 = value;
+                OnPropertyChanged("FillRect9");
+            }
+        }
+        public SolidColorBrush FillRect10
+        {
+            get => _fillRect10;
+            set
+            {
+                _fillRect10 = value;
+                OnPropertyChanged("FillRect10");
+            }
+        }
+        public SolidColorBrush FillRect11
+        {
+            get => _fillRect11;
+            set
+            {
+                _fillRect11 = value;
+                OnPropertyChanged("FillRect11");
+            }
+        }
+        public SolidColorBrush FillRect12
+        {
+            get => _fillRect12;
+            set
+            {
+                _fillRect12 = value;
+                OnPropertyChanged("FillRect12");
+            }
+        }
+        public SolidColorBrush FillRect13
+        {
+            get => _fillRect13;
+            set
+            {
+                _fillRect13 = value;
+                OnPropertyChanged("FillRect13");
+            }
+        }
+        public SolidColorBrush FillRect14
+        {
+            get => _fillRect14;
+            set
+            {
+                _fillRect14 = value;
+                OnPropertyChanged("FillRect14");
+            }
+        }
+        public SolidColorBrush FillRect15
+        {
+            get => _fillRect15;
+            set
+            {
+                _fillRect15 = value;
+                OnPropertyChanged("FillRect15");
+            }
+        }
+        public SolidColorBrush FillRect16
+        {
+            get => _fillRect16;
+            set
+            {
+                _fillRect16 = value;
+                OnPropertyChanged("FillRect16");
+            }
+        }
+        public SolidColorBrush FillRect17
+        {
+            get => _fillRect17;
+            set
+            {
+                _fillRect17 = value;
+                OnPropertyChanged("FillRect17");
+            }
+        }
+        public SolidColorBrush FillRect18
+        {
+            get => _fillRect18;
+            set
+            {
+                _fillRect18 = value;
+                OnPropertyChanged("FillRect18");
+            }
+        }
+        public SolidColorBrush FillRect19
+        {
+            get => _fillRect19;
+            set
+            {
+                _fillRect19 = value;
+                OnPropertyChanged("FillRect19");
+            }
+        }
+
+
+        public reservationAffichage Resa9
+        {
+            get => _resa9;
+            set
+            {
+                _resa9 = value;
+                OnPropertyChanged("Resa9");
+            }
+        }
+        public reservationAffichage Resa10
+        {
+            get => _resa10;
+            set
+            {
+                _resa10 = value;
+                OnPropertyChanged("Resa10");
+            }
+        }
+        public reservationAffichage Resa11
+        {
+            get => _resa11;
+            set
+            {
+                _resa11 = value;
+                OnPropertyChanged("Resa11");
+            }
+        }
+        public reservationAffichage Resa12
+        {
+            get => _resa12;
+            set
+            {
+                _resa12 = value;
+                OnPropertyChanged("Resa12");
+            }
+        }
+        public reservationAffichage Resa13
+        {
+            get => _resa13;
+            set
+            {
+                _resa13 = value;
+                OnPropertyChanged("Resa13");
+            }
+        }
+        public reservationAffichage Resa14
+        {
+            get => _resa14;
+            set
+            {
+                _resa14 = value;
+                OnPropertyChanged("Resa14");
+            }
+        }
+        public reservationAffichage Resa15
+        {
+            get => _resa15;
+            set
+            {
+                _resa15 = value;
+                OnPropertyChanged("Resa15");
+            }
+        }
+        public reservationAffichage Resa16
+        {
+            get => _resa16;
+            set
+            {
+                _resa16 = value;
+                OnPropertyChanged("Resa16");
+            }
+        }
+        public reservationAffichage Resa17
+        {
+            get => _resa17;
+            set
+            {
+                _resa17 = value;
+                OnPropertyChanged("Resa17");
+            }
+        }
+        public reservationAffichage Resa18
+        {
+            get => _resa18;
+            set
+            {
+                _resa18 = value;
+                OnPropertyChanged("Resa18");
+            }
+        }
+        public reservationAffichage Resa19
+        {
+            get => _resa19;
+            set
+            {
+                _resa19 = value;
+                OnPropertyChanged("Resa19");
+            }
+        }
+
+        private void refreshResaAffichage()
+        {
+            Resa9 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 9, Clients);
+            if (Resa9.User != null)
+            {
+                FillRect9 = new SolidColorBrush();
+                FillRect9.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect9 = new SolidColorBrush();
+                FillRect9.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa10 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 10, Clients);
+            if(Resa10.User != null)
+            {
+                FillRect10 = new SolidColorBrush();
+                FillRect10.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect10 = new SolidColorBrush();
+                FillRect10.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa11 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 11, Clients);
+            if (Resa11.User != null)
+            {
+                FillRect11 = new SolidColorBrush();
+                FillRect11.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect11 = new SolidColorBrush();
+                FillRect11.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa12 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 12, Clients);
+            if (Resa12.User != null)
+            {
+                FillRect12 = new SolidColorBrush();
+                FillRect12.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect12 = new SolidColorBrush();
+                FillRect12.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa13 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 13, Clients);
+            if (Resa13.User != null)
+            {
+                FillRect13 = new SolidColorBrush();
+                FillRect13.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect13 = new SolidColorBrush();
+                FillRect13.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa14 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 14, Clients);
+            if (Resa14.User != null)
+            {
+                FillRect14 = new SolidColorBrush();
+                FillRect14.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect14 = new SolidColorBrush();
+                FillRect14.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa15 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 15, Clients);
+            if (Resa15.User != null)
+            {
+                FillRect15 = new SolidColorBrush();
+                FillRect15.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect15 = new SolidColorBrush();
+                FillRect15.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa16 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 16, Clients);
+            if (Resa16.User != null)
+            {
+                FillRect16 = new SolidColorBrush();
+                FillRect16.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect16 = new SolidColorBrush();
+                FillRect16.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa17 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 17, Clients);
+            if (Resa17.User != null)
+            {
+                FillRect17 = new SolidColorBrush();
+                FillRect17.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect17 = new SolidColorBrush();
+                FillRect17.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa18 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 18, Clients);
+            if (Resa18.User != null)
+            {
+                FillRect18 = new SolidColorBrush();
+                FillRect18.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect18 = new SolidColorBrush();
+                FillRect18.Color = Color.FromRgb(0, 157, 31);
+            }
+
+            Resa19 = _daoReservationAffichage.getReservationAffichage(SelectedSalle, SelectedDate, 19, Clients);
+            if (Resa19.User != null)
+            {
+                FillRect19 = new SolidColorBrush();
+                FillRect19.Color = Color.FromRgb(215, 0, 0);
+            }
+            else
+            {
+                FillRect19 = new SolidColorBrush();
+                FillRect19.Color = Color.FromRgb(0, 157, 31);
+            }
+        }
 
 
         public DateTime SelectedDate
@@ -434,6 +783,8 @@ namespace viewModel
             {
                 _selectedDate = value;
                 OnPropertyChanged("SelectedDate");
+                refreshResaAffichage();
+                refreshHorairesDisponibles();
             }
         }
 
@@ -456,6 +807,56 @@ namespace viewModel
             VisibilityPlanning4 = Visibility.Hidden;
             VisibilityResa = Visibility.Visible;
             VisibilityResaState1 = Visibility.Visible;
+        }
+
+        public ICommand UpRoom
+        {
+            get
+            {
+                if (this._upRooms == null)
+                    this._upRooms = new RelayCommand(() => this.upRoom(), () => true);
+
+                return this._upRooms;
+            }
+        }
+
+        public void upRoom()
+        {
+            if(SelectedSalleIndex == Salles.Count - 1)
+            {
+                SelectedSalleIndex = 0;
+                SelectedSalle = Salles[SelectedSalleIndex];
+            }
+            else
+            {
+                SelectedSalleIndex++;
+                SelectedSalle = Salles[SelectedSalleIndex];
+            }
+        }
+
+        public ICommand DownRoom
+        {
+            get
+            {
+                if (this._downRooms == null)
+                    this._downRooms = new RelayCommand(() => this.downRoom(), () => true);
+
+                return this._downRooms;
+            }
+        }
+
+        public void downRoom()
+        {
+            if(SelectedSalleIndex == 0)
+            {
+                SelectedSalleIndex = Salles.Count - 1;
+                SelectedSalle = Salles[SelectedSalleIndex];
+            }
+            else
+            {
+                SelectedSalleIndex--;
+                SelectedSalle = Salles[SelectedSalleIndex];
+            }
         }
 
         public void dispPlanning()
@@ -539,12 +940,228 @@ namespace viewModel
         private List<string> _horairesDispos;
 
         private List<Obstacle> _obstacles = new List<Obstacle>();
-        private List<Obstacle> _selectedObstacles = new List<Obstacle>();
+        private ObservableCollection<Obstacle> _selectedObstacles = new ObservableCollection<Obstacle>();
+        private Obstacle _selectedObstacleToAdd, _selectedObstacleToRemove;
 
-        private List<Utilisateur> _selectedParticipants = new List<Utilisateur>();
+        private bool _enableAddObstacleButton, _enableRemoveObstacleButton;
+        private ICommand _addObstacleButton, _removeObstacleButton;
+
+        private ObservableCollection<Utilisateur> _selectedParticipants = new ObservableCollection<Utilisateur>();
+        private Utilisateur _selectedParticipantToAdd, _selectedParticipantToRemove;
+
+        private bool _enableAddParticipantButton, _enableRemoveParticipantButton;
+        private ICommand _addParticipantButton, _removeParticipantButton;
 
         private int _nbJoueurs, _nbObstacles;
         private double _prixParticipants, _prixObstacles, _prixTotal;
+
+
+
+
+        public ICommand AddParticipantButton
+        {
+            get
+            {
+                if (this._addParticipantButton == null)
+                    this._addParticipantButton = new RelayCommand(() => this.addParticipantButton(), () => true);
+
+                return this._addParticipantButton;
+            }
+        }
+
+        public void addParticipantButton()
+        {
+            if(SelectedParticipantToAdd != null)
+            {
+                if(SelectedParticipantToAdd != SelectedClient)
+                {
+                    if (!SelectedParticipants.Contains(SelectedParticipantToAdd))
+                    {
+                        SelectedParticipants.Add(SelectedParticipantToAdd);
+                    }
+                }
+            }
+        }
+
+
+        public ICommand RemoveParticipantButton
+        {
+            get
+            {
+                if (this._removeParticipantButton == null)
+                    this._removeParticipantButton = new RelayCommand(() => this.removeParticipantButton(), () => true);
+
+                return this._removeParticipantButton;
+            }
+        }
+
+        public void removeParticipantButton()
+        {
+            if(SelectedParticipantToRemove != null)
+            {
+                SelectedParticipants.Remove(SelectedParticipantToRemove);
+            }
+        }
+
+        public Utilisateur SelectedParticipantToRemove
+        {
+            get => _selectedParticipantToRemove;
+            set
+            {
+                _selectedParticipantToRemove = value;
+                OnPropertyChanged("SelectedParticipantToRemove");
+                if (SelectedParticipantToRemove != null)
+                {
+                    EnableRemoveParticipantButton = true;
+                }
+                else
+                {
+                    EnableRemoveParticipantButton = false;
+                }
+            }
+        }
+        public Utilisateur SelectedParticipantToAdd
+        {
+            get => _selectedParticipantToAdd;
+            set
+            {
+                _selectedParticipantToAdd = value;
+                OnPropertyChanged("SelectedParticipantToAdd");
+                if(SelectedParticipantToAdd != null)
+                {
+                    EnableAddParticipantButton = true;
+                }
+                else
+                {
+                    EnableAddParticipantButton = false;
+                }
+            }
+        }
+
+        public bool EnableAddParticipantButton
+        {
+            get => _enableAddParticipantButton;
+            set
+            {
+                _enableAddParticipantButton = value;
+                OnPropertyChanged("EnableAddParticipantButton");
+            }
+        }
+        public bool EnableRemoveParticipantButton
+        {
+            get => _enableRemoveParticipantButton;
+            set
+            {
+                _enableRemoveParticipantButton = value;
+                OnPropertyChanged("EnableRemoveParticipantButton");
+            }
+        }
+
+
+
+
+
+
+
+
+        public ICommand AddObstacleButton
+        {
+            get
+            {
+                if (this._addObstacleButton == null)
+                    this._addObstacleButton = new RelayCommand(() => this.addObstacleButton(), () => true);
+
+                return this._addObstacleButton;
+            }
+        }
+
+        public void addObstacleButton()
+        {
+            if (SelectedObstacleToAdd != null)
+            {
+                if (!SelectedObstacles.Contains(SelectedObstacleToAdd))
+                {
+                    SelectedObstacles.Add(SelectedObstacleToAdd);
+                }
+            }
+        }
+
+
+        public ICommand RemoveObstacleButton
+        {
+            get
+            {
+                if (this._removeObstacleButton == null)
+                    this._removeObstacleButton = new RelayCommand(() => this.removeObstacleButton(), () => true);
+
+                return this._removeObstacleButton;
+            }
+        }
+
+        public void removeObstacleButton()
+        {
+            if (SelectedObstacleToRemove != null)
+            {
+                SelectedObstacles.Remove(SelectedObstacleToRemove);
+            }
+        }
+
+        public Obstacle SelectedObstacleToRemove
+        {
+            get => _selectedObstacleToRemove;
+            set
+            {
+                _selectedObstacleToRemove = value;
+                OnPropertyChanged("SelectedObstacleToRemove");
+                if (SelectedObstacleToRemove != null)
+                {
+                    EnableRemoveObstacleButton = true;
+                }
+                else
+                {
+                    EnableRemoveObstacleButton = false;
+                }
+            }
+        }
+        public Obstacle SelectedObstacleToAdd
+        {
+            get => _selectedObstacleToAdd;
+            set
+            {
+                _selectedObstacleToAdd = value;
+                OnPropertyChanged("SelectedObstacleToAdd");
+                if (SelectedObstacleToAdd != null)
+                {
+                    EnableAddObstacleButton = true;
+                }
+                else
+                {
+                    EnableAddObstacleButton = false;
+                }
+            }
+        }
+
+        public bool EnableAddObstacleButton
+        {
+            get => _enableAddObstacleButton;
+            set
+            {
+                _enableAddObstacleButton = value;
+                OnPropertyChanged("EnableAddObstacleButton");
+            }
+        }
+        public bool EnableRemoveObstacleButton
+        {
+            get => _enableRemoveObstacleButton;
+            set
+            {
+                _enableRemoveObstacleButton = value;
+                OnPropertyChanged("EnableRemoveObstacleButton");
+            }
+        }
+
+
+
 
 
         public int NbJoueurs
@@ -613,7 +1230,7 @@ namespace viewModel
         }
 
 
-        public List<Utilisateur> SelectedParticipants
+        public ObservableCollection<Utilisateur> SelectedParticipants
         {
             get
             {
@@ -635,11 +1252,11 @@ namespace viewModel
             set
             {
                 _selectedHoraire = value;
-                OnPropertyChanged("SelectedHoraire");
+                OnPropertyChanged("SelecteHoraire");
             }
         }
 
-        public List<string> HorairesDispo
+        public List<string> HorairesDispos
         {
             get
             {
@@ -654,7 +1271,35 @@ namespace viewModel
 
         
 
+        public void refreshHorairesDisponibles()
+        {
+            List<string> tempList = new List<string>();
 
+            if (Resa9.User == null)
+                tempList.Add("9h");
+            if (Resa10.User == null)
+                tempList.Add("10h");
+            if (Resa11.User == null)
+                tempList.Add("11h");
+            if (Resa12.User == null)
+                tempList.Add("12h");
+            if (Resa13.User == null)
+                tempList.Add("13h");
+            if (Resa14.User == null)
+                tempList.Add("14h");
+            if (Resa15.User == null)
+                tempList.Add("15h");
+            if (Resa16.User == null)
+                tempList.Add("16h");
+            if (Resa17.User == null)
+                tempList.Add("17h");
+            if (Resa18.User == null)
+                tempList.Add("18h");
+            if (Resa19.User == null)
+                tempList.Add("19h");
+
+            HorairesDispos = tempList;
+        }
 
 
 
@@ -716,18 +1361,7 @@ namespace viewModel
                 VisibilityResaState3 = Hidden();
                 VisibilityResaState4 = Visible();
 
-                NbObstacles = SelectedObstacles.Count;
-                NbJoueurs = SelectedParticipants.Count;
-                PrixObstacles = 0;
-                foreach(Obstacle o in SelectedObstacles)
-                {
-                    PrixObstacles += o.Prix;
-                }
-                PrixParticipants = 0;
-                foreach(Utilisateur c in SelectedParticipants)
-                {
-                    PrixParticipants += 5;
-                }
+                refreshTotalResa();
             }
         }
 
@@ -851,7 +1485,7 @@ namespace viewModel
             }
         }
 
-        public List<Obstacle> SelectedObstacles
+        public ObservableCollection<Obstacle> SelectedObstacles
         {
             get
             {
@@ -948,7 +1582,58 @@ namespace viewModel
             {
                 _visibilityResaState4 = value;
                 OnPropertyChanged("VisibilityResaState4");
+                refreshTotalResa();
             }
+        }
+
+        private void refreshTotalResa()
+        {
+            //créer les éléments à basculer ensuite dans les accesseurs
+            int nbJoueurs, nbObstacles;
+            double prixParticipants, prixObstacles, prixTotal;
+
+            nbJoueurs = SelectedParticipants.Count;
+            nbObstacles = SelectedObstacles.Count;
+
+            prixParticipants = nbJoueurs * 8;
+            prixObstacles = 0;
+            foreach (Obstacle o in SelectedObstacles)
+            {
+                prixObstacles += o.Prix;
+            }
+            prixTotal = prixParticipants + prixObstacles;
+
+            NbJoueurs = nbJoueurs;
+            PrixParticipants = prixParticipants;
+            NbObstacles = nbObstacles;
+            PrixObstacles = prixObstacles;
+            PrixTotal = prixTotal;
+        }
+
+
+
+
+        public ICommand ValidResa
+        {
+            get
+            {
+                if (this._validResa == null)
+                    this._validResa = new RelayCommand(() => this.validResa(), () => true);
+
+                return this._validResa;
+            }
+        }
+
+        private void validResa()
+        {
+            _daoParties.Insert(SelectedClient, SelectedDate, SelecteHoraire, SelectedSalle);
+            Partie dernierePartie = _daoParties.SelectDernierePartie(Clients);
+            _daoParticipants.Insert(SelectedParticipants, dernierePartie);
+            _daoReservation.Insert(SelectedClient, PrixTotal, dernierePartie, DateTime.Now);
+            _daoObstaclesParties.Insert(SelectedObstacles, dernierePartie);
+
+            resetResa();
+            VisibilityPlanning1 = Visibility.Visible;
         }
 
         #endregion

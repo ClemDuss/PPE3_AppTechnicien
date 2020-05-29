@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="metier\reservationAffichage.cs" />
     <Compile Include="metier\Transaction.cs" />
     <Compile Include="metier\Utilisateurs.cs" />
     <Compile Include="metier\EtatCompte.cs" />
@@ -76,6 +77,9 @@
     <Compile Include="metier\Ville.cs" />
     <Compile Include="model\daoEtatCompte.cs" />
     <Compile Include="model\daoInfosSupPersonnel.cs" />
+    <Compile Include="model\daoObstaclesParties.cs" />
+    <Compile Include="model\daoParticipants.cs" />
+    <Compile Include="model\daoReservationAffichage.cs" />
     <Compile Include="model\daoUtilisateurs.cs" />
     <Compile Include="model\daoObstacles.cs" />
     <Compile Include="model\daoPartie.cs" />

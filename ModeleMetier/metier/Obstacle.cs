@@ -34,7 +34,7 @@ namespace ModeleMetier.metier
 
         public override string ToString()
         {
-            return Nom;
+            return Nom + " | " + Prix + " €";
         }
     }
 }
